@@ -7,7 +7,7 @@
     "version": "1.0.0.0",
     "description": "A premium, polymorphic gauge for executive and financial dashboards. Bullet, Thermometer, Radial, Arc and Progress in a single visual — with variance, negatives, targets, multi-thresholds, light/dark themes and fluid motion.",
     "supportUrl": "https://sm2care.com",
-    "gitHubUrl": ""
+    "gitHubUrl": "https://github.com/sm2care/sm_pbi_gauge"
   },
   "apiVersion": "5.11.0",
   "author": {

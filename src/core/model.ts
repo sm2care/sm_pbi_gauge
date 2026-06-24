@@ -20,7 +20,10 @@ function firstNumber(v: powerbi.PrimitiveValue | undefined): number | null {
     return isNaN(n) ? null : n;
 }
 
-/** Pull each role's last value out of the categorical values array. */
+/** Pull each role's last value out of the categorical values array.
+ *  When another visual cross-filters this one, Power BI populates the
+ *  `highlights` array; we read it instead of the raw values so the gauge
+ *  reflects the highlighted (filtered) figure for the Value/Target roles. */
 export function readDataView(dataView: DataView | undefined): RawValues {
     const empty: RawValues = {
         value: null, target: null, min: null, max: null
@@ -33,7 +36,11 @@ export function readDataView(dataView: DataView | undefined): RawValues {
     for (const col of cat.values) {
         const roles = col.source.roles || {};
         const lastIdx = col.values.length - 1;
-        const last = firstNumber(col.values[lastIdx]);
+        // Value/Target follow the highlight; scale bounds (min/max) do not.
+        const highlightable = !!(roles["value"] || roles["target"]);
+        const hl = col.highlights;
+        const source = highlightable && hl ? hl : col.values;
+        const last = firstNumber(source[lastIdx]);
 
         if (roles["value"]) out.value = last;
         else if (roles["target"]) out.target = last;

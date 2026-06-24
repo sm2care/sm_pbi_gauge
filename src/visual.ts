@@ -43,6 +43,8 @@ export class SM2ExecutiveGauge implements IVisual {
     private tooltipItems: VisualTooltipDataItem[] = [];
     private events: IVisualEventService;
     private selectionManager: ISelectionManager;
+    private selectionId: powerbi.extensibility.ISelectionId | undefined;
+    private isSelected = false;
     private renderTimer: number | undefined;
 
     constructor(options?: VisualConstructorOptions) {
@@ -66,6 +68,8 @@ export class SM2ExecutiveGauge implements IVisual {
         this.svg = select(stage).append("svg").classed("sm2-svg", true);
         this.defineFilters();
         this.gaugeLayer = this.svg.append("g").classed("sm2-gauge", true);
+
+        this.bindSelection();
     }
 
     public update(options: VisualUpdateOptions): void {
@@ -82,6 +86,10 @@ export class SM2ExecutiveGauge implements IVisual {
     private render(options: VisualUpdateOptions): void {
         const dataView = options.dataViews && options.dataViews[0];
         this.settings = this.fsService.populateFormattingSettingsModel(GaugeSettings, dataView);
+
+        // Identity for the single (aggregated) data point — drives selection
+        // and cross-filtering of other visuals on click / keyboard.
+        this.selectionId = this.buildSelectionId(dataView);
 
         const vp = options.viewport;
         const s = this.settings;
@@ -173,6 +181,7 @@ export class SM2ExecutiveGauge implements IVisual {
         this.layout(ctx);
         this.routeEngine(ctx);
         renderChrome(this.refs, ctx, this.chromeFlags(hc));
+        this.applySelectionState();
 
         // ---- signal completion ---------------------------------------
         // When animating, wait for the load animation to settle so the
@@ -187,12 +196,75 @@ export class SM2ExecutiveGauge implements IVisual {
         }
     }
 
-    /** Right-click anywhere on the visual opens the Power BI context menu. */
+    /** Right-click anywhere on the visual opens the Power BI context menu,
+     *  scoped to the data point so "Include / Exclude" act on this value. */
     private bindContextMenu(): void {
         this.container.addEventListener("contextmenu", (ev: MouseEvent) => {
-            this.selectionManager.showContextMenu({}, { x: ev.clientX, y: ev.clientY });
+            const selArg = this.selectionId ?? {};
+            this.selectionManager.showContextMenu(selArg, { x: ev.clientX, y: ev.clientY });
             ev.preventDefault();
         });
+    }
+
+    /** Wire click + keyboard activation so the gauge emits selection and
+     *  cross-filters other visuals. Honors keyboard focus (declared in
+     *  capabilities) and keeps state in sync with external selection clears. */
+    private bindSelection(): void {
+        const root = this.container;
+        root.setAttribute("tabindex", "0");
+        root.setAttribute("role", "button");
+        root.setAttribute("aria-label", "Gauge value — activate to cross-filter the report");
+
+        const toggle = () => {
+            // Respect the report's "Edit interactions" setting for this visual.
+            const interactive = this.host.hostCapabilities.allowInteractions !== false;
+            if (!this.selectionId || !interactive) return;
+            this.selectionManager.select(this.selectionId).then((ids) => {
+                this.isSelected = ids.length > 0;
+                this.applySelectionState();
+            });
+        };
+
+        root.addEventListener("click", (ev: MouseEvent) => {
+            toggle();
+            ev.stopPropagation();
+        });
+        root.addEventListener("keydown", (ev: KeyboardEvent) => {
+            if (ev.key === "Enter" || ev.key === " " || ev.key === "Spacebar") {
+                toggle();
+                ev.preventDefault();
+            }
+        });
+
+        // When selection is cleared from elsewhere (or the canvas), resync.
+        this.selectionManager.registerOnSelectCallback(
+            (ids: powerbi.extensibility.ISelectionId[]) => {
+                this.isSelected = ids.length > 0;
+                this.applySelectionState();
+            });
+    }
+
+    /** Dim the gauge when the report has an active selection that this data
+     *  point is not part of; full opacity when selected or nothing selected. */
+    private applySelectionState(): void {
+        const anySelection = this.selectionManager.hasSelection();
+        const dimmed = anySelection && !this.isSelected;
+        this.gaugeLayer.style("opacity", dimmed ? 0.35 : 1);
+        this.container.classList.toggle("sm2-selected", this.isSelected);
+    }
+
+    /** Build a measure-based selection id from the Value role column. */
+    private buildSelectionId(
+        dataView: powerbi.DataView | undefined
+    ): powerbi.extensibility.ISelectionId | undefined {
+        const cols = dataView?.categorical?.values;
+        if (!cols || !cols.length) return undefined;
+        const valueCol = cols.find(c => c.source.roles?.["value"]) ?? cols[0];
+        const queryName = valueCol.source.queryName;
+        if (!queryName) return undefined;
+        return this.host.createSelectionIdBuilder()
+            .withMeasure(queryName)
+            .createSelectionId();
     }
 
     /** Show a tooltip while the pointer is over the visual. */
@@ -207,7 +279,7 @@ export class SM2ExecutiveGauge implements IVisual {
             coordinates: coords(ev),
             isTouchEvent: false,
             dataItems: this.tooltipItems,
-            identities: [] as powerbi.extensibility.ISelectionId[]
+            identities: this.selectionId ? [this.selectionId] : []
         });
         root.addEventListener("mouseover", (ev) => {
             if (this.tooltipItems.length) this.tooltipService.show(payload(ev));

@@ -164,6 +164,7 @@
   },
   "supportsHighlight": true,
   "supportsKeyboardFocus": true,
+  "supportsMultiVisualSelection": true,
   "tooltips": {
     "supportedTypes": { "default": true, "canvas": true },
     "roles": ["tooltips"]

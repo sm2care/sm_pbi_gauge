@@ -9,6 +9,20 @@
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    cursor: pointer;
+    outline: none;
+
+    // Keyboard focus ring (the visual declares supportsKeyboardFocus).
+    &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: -2px;
+        border-radius: 18px;
+    }
+}
+
+// Active cross-filter selection — subtle emphasis on the data point.
+.sm2-gauge {
+    transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sm2-card {
@@ -109,7 +123,8 @@
 @media (prefers-reduced-motion: reduce) {
     .sm2-card,
     .sm2-dot,
-    .sm2-chip {
+    .sm2-chip,
+    .sm2-gauge {
         transition: none !important;
     }
 }
