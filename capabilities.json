@@ -82,7 +82,10 @@
             { "displayName": "Minus sign", "value": "sign" },
             { "displayName": "Parentheses", "value": "parentheses" }
           ] }
-        }
+        },
+        "heroColor": { "displayName": "Colore valore", "type": { "fill": { "solid": { "color": true } } } },
+        "heroSize": { "displayName": "Dimensione valore (0 = auto)", "type": { "numeric": true } },
+        "heroBold": { "displayName": "Valore in grassetto", "type": { "bool": true } }
       }
     },
     "targets": {

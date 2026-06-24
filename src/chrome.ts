@@ -18,6 +18,9 @@ export interface ChromeFlags {
     transparentBg: boolean;
     backgroundColor: string;
     showBorder: boolean;
+    heroColor: string;
+    heroSize: number;   // px; 0 = auto (responsive clamp)
+    heroBold: boolean;
 }
 
 export function buildChrome(container: HTMLElement): ChromeRefs {
@@ -71,7 +74,9 @@ export function renderChrome(refs: ChromeRefs, ctx: RenderContext, f: ChromeFlag
     const anchor = ctx.heroAnchorPct;
     refs.hero.style.display = f.heroPosition === "none" ? "none" : "flex";
     style(refs.hero, {
-        color: t.textPrimary,
+        color: f.heroColor || t.textPrimary,
+        fontSize: f.heroSize > 0 ? `${f.heroSize}px` : "",   // "" → CSS clamp (auto)
+        fontWeight: f.heroBold ? "700" : "500",
         fontFeatureSettings: f.tabular ? '"tnum" 1' : "normal",
         position: "absolute",
         left: "50%",

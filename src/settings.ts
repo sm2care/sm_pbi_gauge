@@ -94,9 +94,17 @@ class ValueCard extends Card {
         ],
         value: { displayName: "Minus sign", value: "sign" }
     });
+    heroColor = new formattingSettings.ColorPicker({ name: "heroColor", displayName: "Colore valore", value: { value: "" } });
+    heroSize = new formattingSettings.NumUpDown({
+        name: "heroSize", displayName: "Dimensione valore (0 = auto)", value: 0,
+        options: { minValue: { value: 0, type: MIN }, maxValue: { value: 200, type: MAX } }
+    });
+    heroBold = new formattingSettings.ToggleSwitch({ name: "heroBold", displayName: "Valore in grassetto", value: true });
+
     name = "value";
     displayName = "Value";
-    slices = [this.formatType, this.displayUnits, this.decimals, this.currencySymbol, this.negativeStyle];
+    slices = [this.formatType, this.displayUnits, this.decimals, this.currencySymbol,
+        this.negativeStyle, this.heroColor, this.heroSize, this.heroBold];
 }
 
 class TargetsCard extends Card {

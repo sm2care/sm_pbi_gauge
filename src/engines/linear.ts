@@ -16,6 +16,7 @@ export interface LinearOptions {
     thickness: number;
     showBands: boolean;
     showTarget?: boolean;
+    showTargetLabel?: boolean;
     targetMarker?: "diamond" | "triangle" | "line";
     targetColor?: string;
 }
@@ -95,6 +96,21 @@ export function renderLinear(g: G, ctx: RenderContext, opts: LinearOptions): voi
                 .attr("stroke-width", 2);
         } else {
             shapeMarker(g, opts, geom.cross, thick, p, shape, tColor);
+        }
+
+        // value label beside the marker
+        if (opts.showTargetLabel) {
+            const font = clamp(Math.min(width, height) * 0.08, 10, 15);
+            const off = thick / 2 + 10;
+            const lx = opts.vertical ? geom.cross + off : p;
+            const ly = opts.vertical ? p : geom.cross - off;
+            g.append("text")
+                .attr("x", lx).attr("y", ly)
+                .attr("text-anchor", opts.vertical ? "start" : "middle")
+                .attr("dominant-baseline", "middle")
+                .attr("font-size", font).attr("font-weight", 700)
+                .attr("fill", tColor)
+                .text(ctx.fmt(model.target));
         }
     }
 }

@@ -345,6 +345,7 @@ export class SM2ExecutiveGauge implements IVisual {
                 thickness: type === "thermometer" ? 40 : Math.max(18, ctx.height * 0.22),
                 showBands,
                 showTarget: s.targets.showTarget.value,
+                showTargetLabel: s.targets.showTargetLabel.value,
                 targetMarker: val(s.targets.targetMarker) as any,
                 targetColor: s.targets.targetColor.value.value
             });
@@ -387,7 +388,10 @@ export class SM2ExecutiveGauge implements IVisual {
             // In high contrast, defer to the system background (theme.bgSurface
             // is overridden to the HC palette) by passing an empty color.
             backgroundColor: hc ? "" : s.theme.backgroundColor.value.value,
-            showBorder: s.theme.showBorder.value
+            showBorder: s.theme.showBorder.value,
+            heroColor: hc ? "" : s.value.heroColor.value.value,
+            heroSize: s.value.heroSize.value,
+            heroBold: s.value.heroBold.value
         };
     }
 

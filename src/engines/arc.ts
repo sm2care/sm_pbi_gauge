@@ -146,8 +146,9 @@ export function renderArc(g: G, ctx: RenderContext, opts: ArcOptions): void {
     }
 
     // ---- hero anchor: optical center of the bowl ---------------------
-    // Sit the value just above the diameter line, horizontally centered.
-    const anchorY = cy - radius * (isFull ? 0 : 0.16);
+    // Centre the value within the open bowl (a touch below the geometric
+    // mid-radius reads best), horizontally on the arc's center axis.
+    const anchorY = isFull ? cy : cy - radius * 0.34;
     ctx.heroAnchorPct = { x: 50, y: clamp(anchorY / height * 100, 5, 95) };
 }
 
