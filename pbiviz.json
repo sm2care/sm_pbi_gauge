@@ -1,0 +1,24 @@
+{
+  "visual": {
+    "name": "SM2ExecutiveGauge",
+    "displayName": "SM2 Executive Gauge",
+    "guid": "SM2ExecutiveGauge9F3C2A1B4D5E47A8B0C1D2E3F4A5B6C7",
+    "visualClassName": "SM2ExecutiveGauge",
+    "version": "1.0.0.0",
+    "description": "A premium, polymorphic gauge for executive and financial dashboards. Bullet, Thermometer, Radial, Arc and Progress in a single visual — with variance, negatives, targets, multi-thresholds, light/dark themes and fluid motion.",
+    "supportUrl": "https://sm2care.com",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "5.11.0",
+  "author": {
+    "name": "SM2 Care",
+    "email": "supporto@sm2care.com"
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "dependencies": null,
+  "stringResources": []
+}

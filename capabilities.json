@@ -1,0 +1,171 @@
+{
+  "privileges": [],
+  "dataRoles": [
+    { "displayName": "Value", "name": "value", "kind": "Measure", "description": "Primary value (hero)." },
+    { "displayName": "Target", "name": "target", "kind": "Measure", "description": "Goal — primary marker." },
+    { "displayName": "Minimum", "name": "minValue", "kind": "Measure", "description": "Scale minimum (auto if empty)." },
+    { "displayName": "Maximum", "name": "maxValue", "kind": "Measure", "description": "Scale maximum (auto if empty)." },
+    { "displayName": "Tooltips", "name": "tooltips", "kind": "Measure" }
+  ],
+  "dataViewMappings": [
+    {
+      "conditions": [
+        {
+          "value": { "max": 1 }, "target": { "max": 1 },
+          "minValue": { "max": 1 }, "maxValue": { "max": 1 }
+        }
+      ],
+      "categorical": {
+        "values": {
+          "select": [
+            { "bind": { "to": "value" } },
+            { "bind": { "to": "target" } },
+            { "bind": { "to": "minValue" } },
+            { "bind": { "to": "maxValue" } },
+            { "bind": { "to": "tooltips" } }
+          ]
+        }
+      }
+    }
+  ],
+  "objects": {
+    "shape": {
+      "displayName": "Shape & Layout",
+      "properties": {
+        "gaugeType": {
+          "displayName": "Gauge type",
+          "type": { "enumeration": [
+            { "displayName": "Bullet", "value": "bullet" },
+            { "displayName": "Thermometer", "value": "thermometer" },
+            { "displayName": "Radial", "value": "radial" },
+            { "displayName": "Arc (minimal)", "value": "arc" },
+            { "displayName": "Progress ring", "value": "progress" }
+          ] }
+        },
+        "sweepAngle": { "displayName": "Arc sweep angle", "type": { "numeric": true } },
+        "thickness": { "displayName": "Arc thickness", "type": { "numeric": true } },
+        "orientation": {
+          "displayName": "Orientation (linear)",
+          "type": { "enumeration": [
+            { "displayName": "Horizontal", "value": "horizontal" },
+            { "displayName": "Vertical", "value": "vertical" }
+          ] }
+        },
+        "heroPosition": {
+          "displayName": "Hero value position",
+          "type": { "enumeration": [
+            { "displayName": "Center", "value": "center" },
+            { "displayName": "Below", "value": "below" },
+            { "displayName": "None", "value": "none" }
+          ] }
+        },
+        "adaptiveCollapse": { "displayName": "Adaptive collapse", "type": { "bool": true } }
+      }
+    },
+    "value": {
+      "displayName": "Value",
+      "properties": {
+        "displayUnits": { "displayName": "Display units", "type": { "formatting": { "labelDisplayUnits": true } } },
+        "decimals": { "displayName": "Decimals", "type": { "numeric": true } },
+        "formatType": {
+          "displayName": "Format type",
+          "type": { "enumeration": [
+            { "displayName": "Number", "value": "number" },
+            { "displayName": "Currency", "value": "currency" },
+            { "displayName": "Percent", "value": "percent" }
+          ] }
+        },
+        "currencySymbol": { "displayName": "Currency symbol", "type": { "text": true } },
+        "negativeStyle": {
+          "displayName": "Negative style",
+          "type": { "enumeration": [
+            { "displayName": "Minus sign", "value": "sign" },
+            { "displayName": "Parentheses", "value": "parentheses" }
+          ] }
+        },
+        "heroAutoSize": { "displayName": "Auto-size hero", "type": { "bool": true } }
+      }
+    },
+    "targets": {
+      "displayName": "Target",
+      "properties": {
+        "showTarget": { "displayName": "Show target", "type": { "bool": true } },
+        "targetMarker": {
+          "displayName": "Target marker",
+          "type": { "enumeration": [
+            { "displayName": "Diamond", "value": "diamond" },
+            { "displayName": "Triangle", "value": "triangle" },
+            { "displayName": "Line", "value": "line" }
+          ] }
+        },
+        "targetColor": { "displayName": "Target color", "type": { "fill": { "solid": { "color": true } } } }
+      }
+    },
+    "colors": {
+      "displayName": "Soglie e Colori",
+      "properties": {
+        "mode": {
+          "displayName": "Modalità colore",
+          "type": { "enumeration": [
+            { "displayName": "Tinta unica", "value": "single" },
+            { "displayName": "Per obiettivo (automatico)", "value": "target" },
+            { "displayName": "A soglie", "value": "thresholds" }
+          ] }
+        },
+        "mainColor": { "displayName": "Colore principale", "type": { "fill": { "solid": { "color": true } } } },
+        "trackColor": { "displayName": "Colore traccia", "type": { "fill": { "solid": { "color": true } } } },
+        "t1": { "displayName": "Soglia 1 (%)", "type": { "numeric": true } },
+        "c1": { "displayName": "Colore sotto soglia 1", "type": { "fill": { "solid": { "color": true } } } },
+        "t2": { "displayName": "Soglia 2 (%)", "type": { "numeric": true } },
+        "c2": { "displayName": "Colore tra le soglie", "type": { "fill": { "solid": { "color": true } } } },
+        "c3": { "displayName": "Colore sopra soglia 2", "type": { "fill": { "solid": { "color": true } } } },
+        "applyToValue": { "displayName": "Applica colore al valore", "type": { "bool": true } },
+        "showBands": { "displayName": "Mostra fasce sulla traccia", "type": { "bool": true } }
+      }
+    },
+    "theme": {
+      "displayName": "Tema & Aspetto",
+      "properties": {
+        "mode": {
+          "displayName": "Theme mode",
+          "type": { "enumeration": [
+            { "displayName": "Auto", "value": "auto" },
+            { "displayName": "Light", "value": "light" },
+            { "displayName": "Dark", "value": "dark" }
+          ] }
+        },
+        "arcGradient": { "displayName": "Arc gradient", "type": { "bool": true } },
+        "glass": { "displayName": "Glass effect", "type": { "bool": true } },
+        "elevation": { "displayName": "Elevation level", "type": { "numeric": true } }
+      }
+    },
+    "typography": {
+      "displayName": "Typography",
+      "properties": {
+        "fontFamily": { "displayName": "Font family", "type": { "formatting": { "fontFamily": true } } },
+        "tabularNumbers": { "displayName": "Tabular numbers", "type": { "bool": true } }
+      }
+    },
+    "animation": {
+      "displayName": "Animation",
+      "properties": {
+        "enabled": { "displayName": "Enable animations", "type": { "bool": true } },
+        "loadStyle": {
+          "displayName": "Load animation",
+          "type": { "enumeration": [
+            { "displayName": "Fill + count", "value": "fillcount" },
+            { "displayName": "Fade", "value": "fade" },
+            { "displayName": "None", "value": "none" }
+          ] }
+        },
+        "duration": { "displayName": "Duration (ms)", "type": { "numeric": true } }
+      }
+    }
+  },
+  "supportsHighlight": true,
+  "supportsKeyboardFocus": true,
+  "tooltips": {
+    "supportedTypes": { "default": true, "canvas": true },
+    "roles": ["tooltips"]
+  }
+}

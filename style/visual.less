@@ -1,0 +1,115 @@
+// SM2 Executive Gauge — base layout. Colors/elevation are applied at
+// runtime from design tokens (see chrome.ts); this file owns structure,
+// spacing, radii and motion only.
+
+.sm2-root {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.sm2-card {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                background 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sm2-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 auto;
+}
+
+.sm2-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sm2-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 9999px;
+    flex: 0 0 auto;
+    transition: background 300ms ease, box-shadow 300ms ease;
+}
+
+.sm2-stage {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sm2-svg {
+    display: block;
+    overflow: visible;
+}
+
+.sm2-hero {
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(22px, 7vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.sm2-insight {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+
+.sm2-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: transform 150ms ease, background 200ms ease;
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+}
+
+.sm2-spark {
+    flex: 0 0 auto;
+    height: 28px;
+    opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sm2-card,
+    .sm2-dot,
+    .sm2-chip {
+        transition: none !important;
+    }
+}
