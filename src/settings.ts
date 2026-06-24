@@ -29,9 +29,10 @@ class ShapeCard extends Card {
         value: { displayName: "Bullet", value: "bullet" }
     });
     sweepAngle = new formattingSettings.NumUpDown({
-        name: "sweepAngle", displayName: "Arc sweep angle", value: 270,
+        name: "sweepAngle", displayName: "Arc sweep angle", value: 180,
         options: { minValue: { value: 90, type: MIN }, maxValue: { value: 360, type: MAX } }
     });
+    showScaleLabels = new formattingSettings.ToggleSwitch({ name: "showScaleLabels", displayName: "Show min/max labels", value: true });
     thickness = new formattingSettings.NumUpDown({
         name: "thickness", displayName: "Arc thickness", value: 18,
         options: { minValue: { value: 4, type: MIN }, maxValue: { value: 48, type: MAX } }
@@ -57,8 +58,8 @@ class ShapeCard extends Card {
 
     name = "shape";
     displayName = "Shape & Layout";
-    slices = [this.gaugeType, this.sweepAngle, this.thickness, this.orientation,
-        this.heroPosition, this.adaptiveCollapse];
+    slices = [this.gaugeType, this.sweepAngle, this.thickness, this.showScaleLabels,
+        this.orientation, this.heroPosition, this.adaptiveCollapse];
 }
 
 class ValueCard extends Card {
@@ -114,10 +115,11 @@ class TargetsCard extends Card {
         value: { displayName: "Diamond", value: "diamond" }
     });
     targetColor = new formattingSettings.ColorPicker({ name: "targetColor", displayName: "Target color", value: { value: TARGET_GREY } });
+    showTargetLabel = new formattingSettings.ToggleSwitch({ name: "showTargetLabel", displayName: "Show target value", value: true });
 
     name = "targets";
     displayName = "Target";
-    slices = [this.showTarget, this.targetMarker, this.targetColor];
+    slices = [this.showTarget, this.targetMarker, this.targetColor, this.showTargetLabel];
 }
 
 class ColorsCard extends Card {
@@ -161,16 +163,20 @@ class ThemeCard extends Card {
         ],
         value: { displayName: "Auto", value: "auto" }
     });
+    transparentBg = new formattingSettings.ToggleSwitch({ name: "transparentBg", displayName: "Sfondo trasparente", value: true });
+    backgroundColor = new formattingSettings.ColorPicker({ name: "backgroundColor", displayName: "Colore sfondo", value: { value: "#FFFFFF" } });
+    showBorder = new formattingSettings.ToggleSwitch({ name: "showBorder", displayName: "Mostra bordo", value: false });
     arcGradient = new formattingSettings.ToggleSwitch({ name: "arcGradient", displayName: "Arc gradient", value: true });
-    glass = new formattingSettings.ToggleSwitch({ name: "glass", displayName: "Glass effect", value: true });
+    glass = new formattingSettings.ToggleSwitch({ name: "glass", displayName: "Glass effect", value: false });
     elevation = new formattingSettings.NumUpDown({
-        name: "elevation", displayName: "Elevation level", value: 2,
+        name: "elevation", displayName: "Elevation level", value: 0,
         options: { minValue: { value: 0, type: MIN }, maxValue: { value: 3, type: MAX } }
     });
 
     name = "theme";
     displayName = "Tema & Aspetto";
-    slices = [this.mode, this.arcGradient, this.glass, this.elevation];
+    slices = [this.mode, this.transparentBg, this.backgroundColor, this.showBorder,
+        this.arcGradient, this.glass, this.elevation];
 }
 
 class TypographyCard extends Card {

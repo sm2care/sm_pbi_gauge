@@ -44,6 +44,7 @@
         },
         "sweepAngle": { "displayName": "Arc sweep angle", "type": { "numeric": true } },
         "thickness": { "displayName": "Arc thickness", "type": { "numeric": true } },
+        "showScaleLabels": { "displayName": "Show min/max labels", "type": { "bool": true } },
         "orientation": {
           "displayName": "Orientation (linear)",
           "type": { "enumeration": [
@@ -98,7 +99,8 @@
             { "displayName": "Line", "value": "line" }
           ] }
         },
-        "targetColor": { "displayName": "Target color", "type": { "fill": { "solid": { "color": true } } } }
+        "targetColor": { "displayName": "Target color", "type": { "fill": { "solid": { "color": true } } } },
+        "showTargetLabel": { "displayName": "Show target value", "type": { "bool": true } }
       }
     },
     "colors": {
@@ -134,6 +136,9 @@
             { "displayName": "Dark", "value": "dark" }
           ] }
         },
+        "transparentBg": { "displayName": "Sfondo trasparente", "type": { "bool": true } },
+        "backgroundColor": { "displayName": "Colore sfondo", "type": { "fill": { "solid": { "color": true } } } },
+        "showBorder": { "displayName": "Mostra bordo", "type": { "bool": true } },
         "arcGradient": { "displayName": "Arc gradient", "type": { "bool": true } },
         "glass": { "displayName": "Glass effect", "type": { "bool": true } },
         "elevation": { "displayName": "Elevation level", "type": { "numeric": true } }

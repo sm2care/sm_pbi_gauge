@@ -2,10 +2,13 @@
 node_modules/
 
 # Build output / artifacts
-dist/
+dist/*
 .tmp/
 *.pbiviz
 webpack.statistics.*.html
+
+# …but DO version the packaged visual so it can be downloaded from the repo
+!dist/*.pbiviz
 
 # Logs
 npm-debug.log*

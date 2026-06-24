@@ -60,4 +60,7 @@ export interface RenderContext {
     animate: boolean;
     reducedMotion: boolean;
     durationMs: number;
+    /** Optical anchor (percent of stage) where the hero value should sit.
+     *  Set by the arc engine so the centered value aligns with the bowl. */
+    heroAnchorPct?: { x: number; y: number };
 }

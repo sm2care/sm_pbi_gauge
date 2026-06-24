@@ -350,7 +350,12 @@ export class SM2ExecutiveGauge implements IVisual {
             renderArc(this.gaugeLayer, ctx, {
                 sweepDeg: sweep,
                 thickness: type === "arc" ? Math.max(8, s.shape.thickness.value * 0.7) : s.shape.thickness.value,
-                showBands
+                showBands,
+                showScaleLabels: s.shape.showScaleLabels.value && type !== "arc",
+                showTarget: s.targets.showTarget.value,
+                showTargetLabel: s.targets.showTargetLabel.value,
+                targetMarker: val(s.targets.targetMarker) as any,
+                targetColor: s.targets.targetColor.value.value
             });
         }
     }
@@ -374,7 +379,10 @@ export class SM2ExecutiveGauge implements IVisual {
             fontFamily: s.typography.fontFamily.value,
             tabular: s.typography.tabularNumbers.value,
             glass: s.theme.glass.value && !hc,
-            elevation: hc ? 0 : s.theme.elevation.value
+            elevation: hc ? 0 : s.theme.elevation.value,
+            transparentBg: s.theme.transparentBg.value && !hc,
+            backgroundColor: s.theme.backgroundColor.value.value,
+            showBorder: s.theme.showBorder.value
         };
     }
 
