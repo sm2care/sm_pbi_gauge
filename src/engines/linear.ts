@@ -15,6 +15,9 @@ export interface LinearOptions {
     vertical: boolean;
     thickness: number;
     showBands: boolean;
+    showTarget?: boolean;
+    targetMarker?: "diamond" | "triangle" | "line";
+    targetColor?: string;
 }
 
 export function renderLinear(g: G, ctx: RenderContext, opts: LinearOptions): void {
@@ -82,11 +85,36 @@ export function renderLinear(g: G, ctx: RenderContext, opts: LinearOptions): voi
     }
 
     // ---- target marker (solid) ---------------------------------------
-    if (model.targetPos !== null) {
-        marker(g, opts, geom.cross, thick + 12, pos(model.targetPos))
-            .attr("stroke", colors.theme.textSecondary)
-            .attr("stroke-width", 2);
+    if (opts.showTarget !== false && model.targetPos !== null) {
+        const tColor = opts.targetColor || colors.theme.textSecondary;
+        const p = pos(model.targetPos);
+        const shape = opts.targetMarker || "line";
+        if (shape === "line") {
+            marker(g, opts, geom.cross, thick + 12, p)
+                .attr("stroke", tColor)
+                .attr("stroke-width", 2);
+        } else {
+            shapeMarker(g, opts, geom.cross, thick, p, shape, tColor);
+        }
     }
+}
+
+/** Diamond/triangle marker sitting just outside the bar at position p. */
+function shapeMarker(
+    g: G, o: LinearOptions, cross: number, thick: number, p: number,
+    shape: "diamond" | "triangle", color: string
+): void {
+    const s = Math.max(5, thick * 0.32);
+    // place the marker centered on the bar's cross-axis
+    const cxp = o.vertical ? cross : p;
+    const cyp = o.vertical ? p : cross;
+    const path = shape === "triangle"
+        ? `M0,${-s} L${s},${s} L${-s},${s} Z`
+        : `M0,${-s} L${s},0 L0,${s} L${-s},0 Z`;
+    g.append("path")
+        .attr("d", path)
+        .attr("transform", `translate(${cxp},${cyp})`)
+        .attr("fill", color);
 }
 
 // ---- primitive helpers ------------------------------------------------

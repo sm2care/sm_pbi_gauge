@@ -54,12 +54,10 @@ class ShapeCard extends Card {
         ],
         value: { displayName: "Center", value: "center" }
     });
-    adaptiveCollapse = new formattingSettings.ToggleSwitch({ name: "adaptiveCollapse", displayName: "Adaptive collapse", value: true });
-
     name = "shape";
     displayName = "Shape & Layout";
     slices = [this.gaugeType, this.sweepAngle, this.thickness, this.showScaleLabels,
-        this.orientation, this.heroPosition, this.adaptiveCollapse];
+        this.orientation, this.heroPosition];
 }
 
 class ValueCard extends Card {
@@ -96,11 +94,9 @@ class ValueCard extends Card {
         ],
         value: { displayName: "Minus sign", value: "sign" }
     });
-    heroAutoSize = new formattingSettings.ToggleSwitch({ name: "heroAutoSize", displayName: "Auto-size hero", value: true });
-
     name = "value";
     displayName = "Value";
-    slices = [this.formatType, this.displayUnits, this.decimals, this.currencySymbol, this.negativeStyle, this.heroAutoSize];
+    slices = [this.formatType, this.displayUnits, this.decimals, this.currencySymbol, this.negativeStyle];
 }
 
 class TargetsCard extends Card {
@@ -166,7 +162,6 @@ class ThemeCard extends Card {
     transparentBg = new formattingSettings.ToggleSwitch({ name: "transparentBg", displayName: "Sfondo trasparente", value: true });
     backgroundColor = new formattingSettings.ColorPicker({ name: "backgroundColor", displayName: "Colore sfondo", value: { value: "#FFFFFF" } });
     showBorder = new formattingSettings.ToggleSwitch({ name: "showBorder", displayName: "Mostra bordo", value: false });
-    arcGradient = new formattingSettings.ToggleSwitch({ name: "arcGradient", displayName: "Arc gradient", value: true });
     glass = new formattingSettings.ToggleSwitch({ name: "glass", displayName: "Glass effect", value: false });
     elevation = new formattingSettings.NumUpDown({
         name: "elevation", displayName: "Elevation level", value: 0,
@@ -176,7 +171,7 @@ class ThemeCard extends Card {
     name = "theme";
     displayName = "Tema & Aspetto";
     slices = [this.mode, this.transparentBg, this.backgroundColor, this.showBorder,
-        this.arcGradient, this.glass, this.elevation];
+        this.glass, this.elevation];
 }
 
 class TypographyCard extends Card {

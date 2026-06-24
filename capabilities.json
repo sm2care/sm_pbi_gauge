@@ -59,8 +59,7 @@
             { "displayName": "Below", "value": "below" },
             { "displayName": "None", "value": "none" }
           ] }
-        },
-        "adaptiveCollapse": { "displayName": "Adaptive collapse", "type": { "bool": true } }
+        }
       }
     },
     "value": {
@@ -83,8 +82,7 @@
             { "displayName": "Minus sign", "value": "sign" },
             { "displayName": "Parentheses", "value": "parentheses" }
           ] }
-        },
-        "heroAutoSize": { "displayName": "Auto-size hero", "type": { "bool": true } }
+        }
       }
     },
     "targets": {
@@ -139,7 +137,6 @@
         "transparentBg": { "displayName": "Sfondo trasparente", "type": { "bool": true } },
         "backgroundColor": { "displayName": "Colore sfondo", "type": { "fill": { "solid": { "color": true } } } },
         "showBorder": { "displayName": "Mostra bordo", "type": { "bool": true } },
-        "arcGradient": { "displayName": "Arc gradient", "type": { "bool": true } },
         "glass": { "displayName": "Glass effect", "type": { "bool": true } },
         "elevation": { "displayName": "Elevation level", "type": { "numeric": true } }
       }

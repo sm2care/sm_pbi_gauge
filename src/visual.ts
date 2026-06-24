@@ -343,7 +343,10 @@ export class SM2ExecutiveGauge implements IVisual {
             renderLinear(this.gaugeLayer, ctx, {
                 vertical: type === "thermometer" || val(s.shape.orientation) === "vertical",
                 thickness: type === "thermometer" ? 40 : Math.max(18, ctx.height * 0.22),
-                showBands
+                showBands,
+                showTarget: s.targets.showTarget.value,
+                targetMarker: val(s.targets.targetMarker) as any,
+                targetColor: s.targets.targetColor.value.value
             });
         } else {
             const sweep = type === "progress" ? 360 : type === "arc" ? 110 : s.shape.sweepAngle.value;
@@ -381,7 +384,9 @@ export class SM2ExecutiveGauge implements IVisual {
             glass: s.theme.glass.value && !hc,
             elevation: hc ? 0 : s.theme.elevation.value,
             transparentBg: s.theme.transparentBg.value && !hc,
-            backgroundColor: s.theme.backgroundColor.value.value,
+            // In high contrast, defer to the system background (theme.bgSurface
+            // is overridden to the HC palette) by passing an empty color.
+            backgroundColor: hc ? "" : s.theme.backgroundColor.value.value,
             showBorder: s.theme.showBorder.value
         };
     }

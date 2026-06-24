@@ -63,17 +63,21 @@ export function renderChrome(refs: ChromeRefs, ctx: RenderContext, f: ChromeFlag
     });
 
     // ---- hero value --------------------------------------------------
-    refs.hero.style.display = f.heroPosition === "none" ? "none" : "flex";
-    const centered = f.heroPosition === "center";
-    // Align the centered value to the arc's optical anchor when the engine
-    // supplied one; otherwise fall back to the stage center (CSS default).
+    // Always absolutely positioned over the stage (the stage is flex-row, so
+    // a static hero would sit beside the SVG, not over/under it).
+    //   center → arc optical anchor (or stage center)
+    //   below  → bottom-centered, under the gauge
+    const isCenter = f.heroPosition === "center";
     const anchor = ctx.heroAnchorPct;
+    refs.hero.style.display = f.heroPosition === "none" ? "none" : "flex";
     style(refs.hero, {
         color: t.textPrimary,
         fontFeatureSettings: f.tabular ? '"tnum" 1' : "normal",
-        position: centered ? "absolute" : "static",
-        top: centered && anchor ? `${anchor.y}%` : centered ? "50%" : "auto",
-        left: centered && anchor ? `${anchor.x}%` : centered ? "50%" : "auto"
+        position: "absolute",
+        left: "50%",
+        top: isCenter ? `${anchor ? anchor.y : 50}%` : "auto",
+        bottom: isCenter ? "auto" : "4px",
+        transform: isCenter ? "translate(-50%, -50%)" : "translateX(-50%)"
     });
     refs.hero.textContent = ctx.model.hasValue ? ctx.fmt(ctx.model.value) : "—";
 }
